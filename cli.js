@@ -19,7 +19,7 @@ const PerfMonGrapher = require("./perfmon-grapher");
         process.exit(1);
     }
 
-    await PerfMonGrapher(filePath);
+    const { resultPath } = await PerfMonGrapher(filePath);
     
-    console.log("Generating graph file finished.");
+    console.log(`Generating graph file finished. (${resultPath}).`);
 })();

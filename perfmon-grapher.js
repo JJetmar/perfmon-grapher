@@ -7,37 +7,40 @@ module.exports = async (perfMonLogZipFilePath) => {
 
     const file = fs.createReadStream(perfMonLogZipFilePath);
 
-    const preparingDataStructure = new Promise((resolve) => {
+    const collectingData = [];
+
+    const readingEntries = new Promise((resolve) => {
         file.pipe(unzip.Parse())
-        .on('entry', async (entry) => {
-            const fileName = entry.path;
-            const data = [];
+            .on('entry', (entry) => {
+                const entryPromise = new Promise((resolve => {
+                    const fileName = entry.path;
+                    const data = [];
 
-            entry.on("data", async (chunk) => {
-                data.push(chunk);
-            });
-            const buildingEntryData = new Promise((resolve) => {
-                entry.on("end", async (chunk) => {
-                    const result = JSON.parse(data.join("")).log;
-                    dataStructure.push({
-                        file: fileName,
-                        useCase: result.useCase,
-                        start: new Date(new Date(result.timestamp).getTime() - result.duration),
-                        end: new Date(result.timestamp)
+                    entry.on("data", (chunk) => {
+                        data.push(chunk);
+                    }).on("end", () => {
+                        const result = JSON.parse(data.join("")).log;
+                        dataStructure.push({
+                            file: fileName,
+                            useCase: result.useCase,
+                            start: new Date(new Date(result.timestamp).getTime() - result.duration),
+                            end: new Date(result.timestamp)
+                        });
+                        resolve();
                     });
-                });
-            });
-            const entryData = await buildingEntryData;
-            dataStructure.push(entryData);
-
-        }).on("end", () => {
+                }));
+                collectingData.push(entryPromise);
+            })
+        .on("close", () => {
             resolve();
         });
     });
+    await readingEntries;
+    await Promise.all(collectingData);
 
-    await preparingDataStructure;
+    const resultPath = path.join(path.dirname(perfMonLogZipFilePath), path.basename(perfMonLogZipFilePath, '.zip') + ".html");
 
-    fs.writeFileSync(path.join(path.dirname(perfMonLogZipFilePath), path.basename(perfMonLogZipFilePath, '.zip') + ".html"), `
+    fs.writeFileSync(resultPath, `
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load("current", {packages:["timeline"]});
@@ -60,4 +63,5 @@ module.exports = async (perfMonLogZipFilePath) => {
     </script>
     <div id="perfmon-timeline" style="height: 100%; width: 600%"></div>
     `);
+    return { resultPath };
 };
