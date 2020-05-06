@@ -3,7 +3,6 @@ const path = require('path');
 const unzip = require('unzip-stream');
 
 module.exports = async (perfMonLogZipFilePath) => {
-    filePath = path.resolve(perfMonLogZipFilePath);
     const dataStructure = [];
 
     const file = fs.createReadStream(perfMonLogZipFilePath);
@@ -11,8 +10,8 @@ module.exports = async (perfMonLogZipFilePath) => {
     const preparingDataStructure = new Promise((resolve) => {
         file.pipe(unzip.Parse())
         .on('entry', async (entry) => {
-            var fileName = entry.path;
-            const data = []
+            const fileName = entry.path;
+            const data = [];
 
             entry.on("data", async (chunk) => {
                 data.push(chunk);

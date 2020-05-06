@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require("fs");
 const path = require("path");
 const PerfMonGrapher = require("./perfmon-grapher");
@@ -10,7 +12,7 @@ const PerfMonGrapher = require("./perfmon-grapher");
         process.exit(1);
     }
 
-    filePath = path.resolve(perfMonLogZipFilePath);
+    const filePath = path.resolve(perfMonLogZipFilePath);
 
     if (!fs.existsSync(filePath)) {
         console.log(`File: ${perfMonLogZipFilePath} does not exist`);
