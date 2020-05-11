@@ -1,8 +1,8 @@
 {
   "name": "@jjetmar/perfmon-grapher",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "",
-  "main": "perfmon-grapher.js",
+  "main": "src/perfmon-grapher.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,9 +16,12 @@
   "author": "JJetmar",
   "license": "UNLICENSED",
   "dependencies": {
-    "unzip-stream": "^0.3.0"
+    "koa": "^2.11.0",
+    "opener": "^1.5.1",
+    "unzip-stream": "^0.3.0",
+    "yargs": "^15.3.1"
   },
   "bin": {
-    "perfmon-grapher": "./cli.js"
+    "perfmon-grapher": "src/cli.js"
   }
 }
