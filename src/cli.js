@@ -14,7 +14,7 @@ const opener = require('opener');
         run: !!arguments["r"],
         interactive: !!arguments["i"],
         inputFile: Object.values(arguments).find(
-            value => typeof value === "string")
+            value => typeof value === "string") || arguments._[0]
     };
 
     const perfmonLogZipFilePath = options.inputFile;
