@@ -20,7 +20,7 @@ const opener = require('opener');
     const perfmonLogZipFilePath = options.inputFile;
 
     if (!perfmonLogZipFilePath) {
-        console.log("You need to specify a path to a permMon zip file...");
+        console.log("You need to specify a path to a perfmon zip file...");
         process.exit(1);
     }
 
