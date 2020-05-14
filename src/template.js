@@ -286,11 +286,15 @@ ${interactive ? `
               </li>
             </ul>
             <div class="tab-content">
-              <div class="tab-pane fade show active" id="detail-graph-panel" role="tabpanel" aria-labelledby="detail-graph-tab"><div style="overflow: auto"><div id="graph-detail" ></div></div></div>
+              <div class="tab-pane fade show active" id="detail-graph-panel" role="tabpanel" aria-labelledby="detail-graph-tab">
+                <div style="overflow: auto">
+                  <div id="graph-detail" ></div>
+                  <div class="alert alert-primary mt-2" role="alert">
+                    There are currently missing data for start and end of each items. These are artificially calculated. Durations of items correspond to the real measurements.  
+                  </div>
+                </div>
+              </div>
               <div class="tab-pane fade" id="json-panel" role="tabpanel" aria-labelledby="json-tab"><pre><code id="json"></code></pre></div>
-            </div>
-            <div class="alert alert-primary mt-2" role="alert">
-              There are currently missing data for start and end of each items. These are artificially calculated. Durations of items correspond to the real measurements.  
             </div>
           </div>
         </div>
