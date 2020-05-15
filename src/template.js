@@ -193,13 +193,16 @@ ${interactive ? `
               return parseFloat($row.attr("y")) < parseFloat($bar.attr("y")) && parseFloat($row.attr("y")) + parseFloat($row.attr("height")) > parseFloat($bar.attr("y")) + parseFloat($bar.attr("height"));
             }).eq(0);
             
+            const uniqueRows = new Set();
             const $collisionBars = $bar.parent().children("rect").filter((index, el) => {
               const $iBar = $(el);
               return index !== 0
+                && !uniqueRows.has(parseFloat($iBar.attr("y")))
                 && parseFloat($iBar.attr("y")) > parseFloat($barRow.attr("y"))
                 && parseFloat($iBar.attr("y")) < parseFloat($bar.attr("y"))
                 && parseFloat($iBar.attr("x")) <= parseFloat($bar.attr("x"))
-                && parseFloat($iBar.attr("x")) + parseFloat($iBar.attr("width")) > parseFloat($bar.attr("x"));
+                && parseFloat($iBar.attr("x")) + parseFloat($iBar.attr("width")) > parseFloat($bar.attr("x"))
+                && uniqueRows.add(parseFloat($iBar.attr("y")));
             });
             
             if ($collisionBars.length === 0) return;

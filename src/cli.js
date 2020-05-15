@@ -59,11 +59,11 @@ const opener = require('opener');
                 repeat = false
             } catch (e) {
                 if (process.env.port === port) {
-                    console.error(`Port ${port} seem to be already in use`, e);
+                    console.error(`Port ${port} seems to be already in use.`, e);
                     process.exit(1);
                 } else {
                     const newPort = generateRandomPort();
-                    console.warn(`Port ${port} seem to be already in use. Trying new port ${newPort}...`)
+                    console.warn(`Port ${port} seems to be already in use. Trying new port ${newPort}...`)
                     port = newPort;
                 }
             }
