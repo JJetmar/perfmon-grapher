@@ -1,5 +1,5 @@
 # Install/Update
-`npm install git:github.com:JJetmar/perfmon-grapher.git -g`
+`npm install git+https://github.com/JJetmar/perfmon-grapher.git -g`
 
 # Usage
 `perfmon-grapher perfmon-log.zip`
